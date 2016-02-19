@@ -44,13 +44,12 @@ public class ApplicationMaster {
     Priority priority = Records.newRecord(Priority.class);
     priority.setPriority(0);
 
-    // Resource requirements for worker containers
-    Resource capability = Records.newRecord(Resource.class);
-    capability.setMemory(128);
-    capability.setVirtualCores(1);
-
     // Make container requests to ResourceManager
     for (int i = 0; i < n; ++i) {
+      // Resource requirements for worker containers
+      Resource capability = Records.newRecord(Resource.class);
+      capability.setMemory(512 + i);
+      capability.setVirtualCores(1);
       ContainerRequest containerAsk = new ContainerRequest(capability, null, null, priority);
       System.out.println("Making res-req " + i);
       rmClient.addContainerRequest(containerAsk);
